@@ -1,7 +1,10 @@
 package com.thomasmylonas.authentication_microservice_app;
 
-import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
+//import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
+
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
+//import com.thomasmylonas.authentication_microservice_app.services.TransactionService;
+import com.thomasmylonas.authentication_microservice_app.services.TransactionServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,9 +20,10 @@ public class AuthenticationMicroserviceAppApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(TransactionRepository transactionRepository) {
+    public CommandLineRunner commandLineRunner(TransactionRepository transactionRepository, TransactionServiceImpl transactionService) {
         return args -> {
-            transactionRepository.saveAll(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
+//            transactionRepository.saveAll(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
+            transactionRepository.saveAll(transactionService.generateTransactions(5));
         };
     }
 }
