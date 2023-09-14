@@ -1,68 +1,107 @@
 package com.thomasmylonas.authentication_microservice_app.services;
 
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
-import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thomasmylonas.authentication_microservice_app.exceptions.ItemNotFoundException;
+import com.thomasmylonas.authentication_microservice_app.helpers.HelperClass;
+import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.Objects;
 
 @Service(value = "transactionService")
 public class TransactionServiceImpl implements TransactionService {
 
-    private final Random random = new Random();
+    private final TransactionRepository transactionRepository;
+    private final WebClient webClient;
 
-    @Autowired
-    WebClient webClient;
-
-    public List<Transaction> generateTransactions(int amount) {
-
-        List<Transaction> transactions = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            transactions.add(Transaction.builder()
-                    .timestamp(randomTimestamp())
-                    .type("Type_" + random.nextInt(1_000_000))
-                    .actor("Actor_" + random.nextInt(1_000_000))
-                    .transactionData(generateData(random.nextInt(10)))
-                    .build());
-        }
-        return transactions;
+    public TransactionServiceImpl(TransactionRepository transactionRepository, WebClient webClient) {
+        this.transactionRepository = transactionRepository;
+        this.webClient = webClient;
     }
 
     @Override
-    public List<Transaction> sendTransactions(List<Transaction> transactions) {
+    public List<Transaction> sendTransactions(String requestUrl, List<Transaction> transactions) {
 
         return webClient
                 .post()
-                .uri("http://localhost:8081/transactions/save-all")
-                .body(BodyInserters.fromValue(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED))
+                .uri(requestUrl)
+                .body(BodyInserters.fromValue(transactions))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Transaction>>() {
                 })
                 .block();
     }
 
-    private Timestamp randomTimestamp() {
-        long offset = Timestamp.valueOf("2012-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2014-01-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        return new Timestamp(offset + (long) (Math.random() * diff));
+    @Override
+    public Transaction fetchTransactionById(Long id) {
+        return transactionRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
     }
 
-    private Map<String, String> generateData(int dataAmount) {
+    @Override
+    public List<Transaction> fetchAllTransactions() {
+        return transactionRepository.findAll();
+    }
 
-        Map<String, String> map = new HashMap<>();
-        for (int i = 0; i < dataAmount; i++) {
-            map.put("Key_" + random.nextInt(1_000_000), "Data_" + random.nextInt(1_000_000));
+    @Override
+    public Transaction saveTransaction(Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public List<Transaction> saveAllTransactions(List<Transaction> transactions) {
+        return transactionRepository.saveAll(transactions);
+    }
+
+    @Override
+    public Transaction updateTransaction(Transaction newTransaction, Long id) {
+
+        return transactionRepository.findById(id)
+                .map(transaction -> {
+                    if (Objects.nonNull(newTransaction.getTimestamp())) {
+                        newTransaction.setTimestamp(newTransaction.getTimestamp());
+                    }
+                    if (Objects.nonNull(newTransaction.getType()) && !newTransaction.getType().isEmpty()) {
+                        newTransaction.setType(newTransaction.getType());
+                    }
+                    if (Objects.nonNull(newTransaction.getActor()) && !newTransaction.getActor().isEmpty()) {
+                        newTransaction.setActor(newTransaction.getActor());
+                    }
+                    if (Objects.nonNull(newTransaction.getTransactionData()) && !newTransaction.getTransactionData().isEmpty()) {
+                        newTransaction.setTransactionData(newTransaction.getTransactionData());
+                    }
+                    return saveTransaction(newTransaction);
+                })
+                .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
+    }
+
+    @Override
+    public void deleteTransactionById(Long id) {
+
+        try {
+            transactionRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ItemNotFoundException(Transaction.class.getSimpleName(), id);
         }
-        return map;
+    }
+
+    public List<Transaction> generateTransactions(int amount) {
+
+        List<Transaction> transactions = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            transactions.add(Transaction.builder()
+                    .timestamp(HelperClass.randomTimestamp())
+                    .type("Type_" + HelperClass.RANDOM.nextInt(1_000_000))
+                    .actor("Actor_" + HelperClass.RANDOM.nextInt(1_000_000))
+                    .transactionData(HelperClass.generateData(HelperClass.RANDOM.nextInt(10)))
+                    .build());
+        }
+        return transactions;
     }
 }

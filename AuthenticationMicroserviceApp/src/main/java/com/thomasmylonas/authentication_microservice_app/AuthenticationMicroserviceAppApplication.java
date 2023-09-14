@@ -23,7 +23,14 @@ public class AuthenticationMicroserviceAppApplication {
     public CommandLineRunner commandLineRunner(TransactionRepository transactionRepository, TransactionServiceImpl transactionService) {
         return args -> {
 //            transactionRepository.saveAll(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
-            transactionRepository.saveAll(transactionService.generateTransactions(5));
+//            transactionRepository.saveAll(transactionService.generateTransactions(5));
+            transactionService.sendTransactions("http://localhost:8080/transactions/save-all",
+                    transactionService.generateTransactions(5));
         };
     }
 }
+
+/*
+SELECT * FROM TRANSACTIONS;
+SELECT * FROM TRANSACTIONS_DATA;
+*/
