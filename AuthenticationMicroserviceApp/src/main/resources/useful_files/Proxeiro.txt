@@ -1,0 +1,4 @@
+SELECT * FROM TRANSACTIONS;
+SELECT * FROM TRANSACTIONS_DATA;
+
+======================================================================================

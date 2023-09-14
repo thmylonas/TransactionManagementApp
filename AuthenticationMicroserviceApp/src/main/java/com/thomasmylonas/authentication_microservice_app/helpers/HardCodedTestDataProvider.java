@@ -9,6 +9,8 @@ import java.util.List;
 
 public class HardCodedTestDataProvider {
 
+    public static final int AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS = 5;
+
     public static final List<Transaction> TRANSACTIONS_LIST_HARD_CODED = Arrays.asList(
             Transaction.builder()
                     .timestamp(new Date())

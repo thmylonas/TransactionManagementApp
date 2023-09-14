@@ -1,9 +1,6 @@
 package com.thomasmylonas.authentication_microservice_app;
 
-//import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
-
-import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
-//import com.thomasmylonas.authentication_microservice_app.services.TransactionService;
+import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
 import com.thomasmylonas.authentication_microservice_app.services.TransactionServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,17 +17,29 @@ public class AuthenticationMicroserviceAppApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(TransactionRepository transactionRepository, TransactionServiceImpl transactionService) {
+    public CommandLineRunner commandLineRunner(TransactionServiceImpl transactionService) {
+
         return args -> {
-//            transactionRepository.saveAll(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
-//            transactionRepository.saveAll(transactionService.generateTransactions(5));
-            transactionService.sendTransactions("http://localhost:8080/transactions/save-all",
-                    transactionService.generateTransactions(5));
+
+            /*
+            // Create Hardcoded test data
+            // First inject the "com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository"
+            // through the "AuthenticationMicroserviceAppApplication::commandLineRunner" parameters
+            transactionRepository.saveAll(com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
+            */
+
+            createTestTransactionsInThisMicroservice(transactionService);
+            sendTransactionsInTransactionMicroservice(transactionService);
         };
     }
-}
 
-/*
-SELECT * FROM TRANSACTIONS;
-SELECT * FROM TRANSACTIONS_DATA;
-*/
+    private static void createTestTransactionsInThisMicroservice(TransactionServiceImpl transactionService) {
+        transactionService.sendTransactions("http://localhost:8080/transactions/save-all",
+                transactionService.generateTransactions(HardCodedTestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
+    }
+
+    private static void sendTransactionsInTransactionMicroservice(TransactionServiceImpl transactionService) {
+        transactionService.sendTransactions("http://localhost:8081/transactions/save-all",
+                transactionService.generateTransactions(HardCodedTestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
+    }
+}
