@@ -1,6 +1,7 @@
 package com.thomasmylonas.authentication_microservice_app;
 
 import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
+import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
 import com.thomasmylonas.authentication_microservice_app.services.TransactionServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,14 +24,17 @@ public class AuthenticationMicroserviceAppApplication {
 
             /*
             // Create Hardcoded test data
-            // First inject the "com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository"
-            // through the "AuthenticationMicroserviceAppApplication::commandLineRunner" parameters
-            transactionRepository.saveAll(com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
+            // First inject the "TransactionRepository" through the "AuthenticationMicroserviceAppApplication::commandLineRunner" parameters
+            createHardCodedTestDataInThisMicroservice(transactionRepository);
             */
 
             createTestTransactionsInThisMicroservice(transactionService);
             sendTransactionsInTransactionMicroservice(transactionService);
         };
+    }
+
+    private static void createHardCodedTestDataInThisMicroservice(TransactionRepository transactionRepository) {
+        transactionRepository.saveAll(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
     }
 
     private static void createTestTransactionsInThisMicroservice(TransactionServiceImpl transactionService) {
