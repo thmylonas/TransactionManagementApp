@@ -2,15 +2,10 @@ package com.thomasmylonas.transaction_microservice_app.services;
 
 import com.thomasmylonas.transaction_microservice_app.entities.Transaction;
 import com.thomasmylonas.transaction_microservice_app.exceptions.ItemNotFoundException;
-import com.thomasmylonas.transaction_microservice_app.helpers.HelperClass;
 import com.thomasmylonas.transaction_microservice_app.repositories.TransactionRepository;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,24 +13,9 @@ import java.util.Objects;
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
-    private final WebClient webClient;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, WebClient webClient) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.webClient = webClient;
-    }
-
-    @Override
-    public List<Transaction> sendTransactions(String requestUrl, List<Transaction> transactions) {
-
-        return webClient
-                .post()
-                .uri(requestUrl)
-                .body(BodyInserters.fromValue(transactions))
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Transaction>>() {
-                })
-                .block();
     }
 
     @Override
@@ -89,19 +69,5 @@ public class TransactionServiceImpl implements TransactionService {
         } catch (EmptyResultDataAccessException e) {
             throw new ItemNotFoundException(Transaction.class.getSimpleName(), id);
         }
-    }
-
-    public List<Transaction> generateTransactions(int amount) {
-
-        List<Transaction> transactions = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            transactions.add(Transaction.builder()
-                    .timestamp(HelperClass.randomTimestamp())
-                    .type("Type_" + HelperClass.RANDOM.nextInt(1_000_000))
-                    .actor("Actor_" + HelperClass.RANDOM.nextInt(1_000_000))
-                    .transactionData(HelperClass.generateData(HelperClass.RANDOM.nextInt(10)))
-                    .build());
-        }
-        return transactions;
     }
 }
