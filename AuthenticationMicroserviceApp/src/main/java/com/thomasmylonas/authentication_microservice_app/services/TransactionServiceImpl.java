@@ -4,6 +4,7 @@ import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
 import com.thomasmylonas.authentication_microservice_app.exceptions.ItemNotFoundException;
 import com.thomasmylonas.authentication_microservice_app.helpers.HelperClass;
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -29,7 +30,11 @@ public class TransactionServiceImpl implements TransactionService {
 
         webClient.post()
                 .uri(requestUrl)
-                .body(BodyInserters.fromValue(transactions));
+                .body(BodyInserters.fromValue(transactions))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Transaction>>() {
+                })
+                .block();
     }
 
     @Override
