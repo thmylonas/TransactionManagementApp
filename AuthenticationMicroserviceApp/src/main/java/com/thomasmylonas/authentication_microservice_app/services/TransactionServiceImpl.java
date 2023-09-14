@@ -26,16 +26,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> sendTransactions(String requestUrl, List<Transaction> transactions) {
+    public void sendTransactions(String requestUrl, List<Transaction> transactions) {
 
-        return webClient
-                .post()
+        webClient.post()
                 .uri(requestUrl)
-                .body(BodyInserters.fromValue(transactions))
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Transaction>>() {
-                })
-                .block();
+                .body(BodyInserters.fromValue(transactions));
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TransactionService {
 
-    List<Transaction> sendTransactions(String requestUrl, List<Transaction> transactions);
+    void sendTransactions(String requestUrl, List<Transaction> transactions);
 
     Transaction fetchTransactionById(Long id);
 

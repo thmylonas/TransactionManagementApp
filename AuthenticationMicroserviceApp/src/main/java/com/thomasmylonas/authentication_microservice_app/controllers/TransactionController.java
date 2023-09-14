@@ -23,42 +23,42 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    // http://localhost:8082/transactions/{id}
+    // http://localhost:8080/transactions/{id}
     @GetMapping(path = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Transaction getTransactionById(@PathVariable(value = "id") Long transactionId) {
         return transactionService.fetchTransactionById(transactionId);
     }
 
-    // http://localhost:8082/transactions/all
+    // http://localhost:8080/transactions/all
     @GetMapping(path = "/all")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Transaction> getAllTransactions() {
         return transactionService.fetchAllTransactions();
     }
 
-    // http://localhost:8082/transactions/save
+    // http://localhost:8080/transactions/save
     @PostMapping(path = "/save")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Transaction saveTransaction(@RequestBody Transaction transaction) {
         return transactionService.saveTransaction(transaction);
     }
 
-    // http://localhost:8082/transactions/save-all
+    // http://localhost:8080/transactions/save-all
     @PostMapping(path = "/save-all")
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Transaction> saveAllTransactions(@RequestBody List<Transaction> transactions) {
         return transactionService.saveAllTransactions(transactions);
     }
 
-    // http://localhost:8082/transactions/update/{id}
+    // http://localhost:8080/transactions/update/{id}
     @PutMapping("/update/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Transaction updateTransaction(@RequestBody Transaction newTransaction, @PathVariable(value = "id") Long transactionId) {
         return transactionService.updateTransaction(newTransaction, transactionId);
     }
 
-    // http://localhost:8082/transactions/delete/{id}
+    // http://localhost:8080/transactions/delete/{id}
     @DeleteMapping(path = {"/delete/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public String deleteTransactionById(@PathVariable(value = "id") Long transactionId) {
