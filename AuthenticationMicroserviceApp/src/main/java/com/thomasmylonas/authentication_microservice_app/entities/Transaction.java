@@ -47,6 +47,6 @@ public class Transaction {
             joinColumns = {@JoinColumn(name = "Transactions_Data_Id", referencedColumnName = "Id")}
     )
     @MapKeyColumn(name = "Data_Key")
-    @Column(name = "Data_Value", length = 15)
+    @Column(name = "Data_Value")
     private Map<String, String> transactionData;
 }
