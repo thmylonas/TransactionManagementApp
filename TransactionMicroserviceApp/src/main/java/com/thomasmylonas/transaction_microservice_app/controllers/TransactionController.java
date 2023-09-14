@@ -1,0 +1,68 @@
+package com.thomasmylonas.transaction_microservice_app.controllers;
+
+import com.thomasmylonas.transaction_microservice_app.entities.Transaction;
+import com.thomasmylonas.transaction_microservice_app.services.TransactionService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(path = "/transactions")
+@AllArgsConstructor
+public class TransactionController {
+
+    private final TransactionService transactionService;
+
+    // http://localhost:8082/transactions/{id}
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Transaction getTransactionById(@PathVariable(value = "id") Long transactionId) {
+        return transactionService.fetchTransactionById(transactionId);
+    }
+
+    // http://localhost:8082/transactions/all
+    @GetMapping(path = "/all")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Transaction> getAllTransactions() {
+        return transactionService.fetchAllTransactions();
+    }
+
+    // http://localhost:8082/transactions/save
+    @PostMapping(path = "/save")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public Transaction saveTransaction(@RequestBody Transaction transaction) {
+        return transactionService.saveTransaction(transaction);
+    }
+
+    // http://localhost:8082/transactions/save-all
+    @PostMapping(path = "/save-all")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public List<Transaction> saveAllTransactions(@RequestBody List<Transaction> transactions) {
+        return transactionService.saveAllTransactions(transactions);
+    }
+
+    // http://localhost:8082/transactions/update/{id}
+    @PutMapping("/update/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Transaction updateTransaction(@RequestBody Transaction newTransaction, @PathVariable(value = "id") Long transactionId) {
+        return transactionService.updateTransaction(newTransaction, transactionId);
+    }
+
+    // http://localhost:8082/transactions/delete/{id}
+    @DeleteMapping(path = {"/delete/{id}"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public String deleteTransactionById(@PathVariable(value = "id") Long transactionId) {
+        transactionService.deleteTransactionById(transactionId);
+        return "The transaction with ID '" + transactionId + "' has been deleted successfully!";
+    }
+}
