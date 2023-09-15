@@ -26,15 +26,15 @@ public class TransactionController {
     // http://localhost:8080/transactions/{id}
     @GetMapping(path = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Transaction getTransactionById(@PathVariable(value = "id") Long transactionId) {
-        return transactionService.fetchTransactionById(transactionId);
+    public Transaction findTransactionById(@PathVariable(value = "id") Long transactionId) {
+        return transactionService.findTransactionById(transactionId);
     }
 
     // http://localhost:8080/transactions/all
     @GetMapping(path = "/all")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Transaction> getAllTransactions() {
-        return transactionService.fetchAllTransactions();
+    public List<Transaction> findAllTransactions() {
+        return transactionService.findAllTransactions();
     }
 
     // http://localhost:8080/transactions/save

@@ -8,9 +8,9 @@ public interface TransactionService {
 
     void sendTransactions(String requestUrl, List<Transaction> transactions);
 
-    Transaction fetchTransactionById(Long id);
+    Transaction findTransactionById(Long id);
 
-    List<Transaction> fetchAllTransactions();
+    List<Transaction> findAllTransactions();
 
     Transaction saveTransaction(Transaction transaction);
 

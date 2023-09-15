@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface TransactionService {
 
-    Transaction fetchTransactionById(Long id);
+    Transaction findTransactionById(Long id);
 
-    List<Transaction> fetchAllTransactions();
+    List<Transaction> findAllTransactions();
 
     Transaction saveTransaction(Transaction transaction);
 

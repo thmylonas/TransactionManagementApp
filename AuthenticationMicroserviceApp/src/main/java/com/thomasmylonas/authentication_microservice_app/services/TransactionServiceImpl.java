@@ -38,13 +38,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction fetchTransactionById(Long id) {
+    public Transaction findTransactionById(Long id) {
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
     }
 
     @Override
-    public List<Transaction> fetchAllTransactions() {
+    public List<Transaction> findAllTransactions() {
         return transactionRepository.findAll();
     }
 
