@@ -11,7 +11,7 @@ public class HelperClass {
 
     public static final Random RANDOM = new Random();
 
-    public static String transformStacktraceToString(Exception e) {
+    public static String stringifyStacktrace(Exception e) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);

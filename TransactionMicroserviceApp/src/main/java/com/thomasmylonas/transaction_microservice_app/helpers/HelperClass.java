@@ -5,7 +5,7 @@ import java.io.StringWriter;
 
 public class HelperClass {
 
-    public static String transformStacktraceToString(Exception e) {
+    public static String stringifyStacktrace(Exception e) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);

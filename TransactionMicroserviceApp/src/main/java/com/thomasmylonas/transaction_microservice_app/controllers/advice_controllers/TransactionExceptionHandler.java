@@ -19,7 +19,11 @@ import java.util.Objects;
 @RestControllerAdvice
 public class TransactionExceptionHandler {
 
-    @Value("${stacktrace.print:true}") // This default value only in DEV environment/profile
+    /**
+     * This default value only in DEV environment/profile. Set "false" in PROD environment/profile.
+     * The client to see the stacktrace, must add in the request URI the "?trace=true"
+     */
+    @Value("${stacktrace.print:true}")
     private boolean printStacktrace;
 
     @ExceptionHandler(value = {ItemNotFoundException.class})
@@ -52,10 +56,10 @@ public class TransactionExceptionHandler {
 
     private ResponseEntity<ResponseError> buildResponseError(Exception e, String message, HttpStatus status, WebRequest request) {
 
-        ResponseError responseError = new ResponseError(LocalDateTime.now(), status.toString(), message);
+        ResponseError responseError = new ResponseError(LocalDateTime.now(), status.toString(), message, request.getDescription(false));
 
         if (printStacktrace && isTraceParamEnabled(request)) {
-            responseError.setStacktrace(HelperClass.transformStacktraceToString(e));
+            responseError.setStacktrace(HelperClass.stringifyStacktrace(e));
         }
         return ResponseEntity.status(status).body(responseError);
     }

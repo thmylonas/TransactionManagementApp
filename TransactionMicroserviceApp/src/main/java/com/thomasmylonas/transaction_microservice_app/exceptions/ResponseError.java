@@ -18,6 +18,6 @@ public class ResponseError {
     private final LocalDateTime timestamp;
     private final String statusCode;
     private final String message;
-    //private final String path; // "request URL"
+    private final String path; // "request URL"
     private String stacktrace;
 }
