@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/transactions")
+@RequestMapping(path = "/v1/transactions")
 @AllArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
 
-    // http://localhost:8080/transactions/{id}
+    // http://localhost:8080/v1/transactions/{id}
     @GetMapping(path = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Transaction findTransactionById(@PathVariable(value = "id") Long transactionId) {
         return transactionService.findTransactionById(transactionId);
     }
 
-    // http://localhost:8080/transactions/all
+    // http://localhost:8080/v1/transactions/all
     @GetMapping(path = "/all")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Transaction> findAllTransactions() {
         return transactionService.findAllTransactions();
     }
 
-    // http://localhost:8080/transactions/all-by-page?page=1&size=10
+    // http://localhost:8080/v1/transactions/all-by-page?page=1&size=10
     @GetMapping(path = "/all-by-page")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Transaction> findAllTransactionsByPage(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
@@ -46,7 +46,7 @@ public class TransactionController {
         return transactionService.findAllTransactionsByPage(pageNumber, pageSize);
     }
 
-    // http://localhost:8080/transactions/all-sorted?sort=field&dir=direction
+    // http://localhost:8080/v1/transactions/all-sorted?sort=field&dir=direction
     @GetMapping(path = "/all-sorted")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Transaction> findAllTransactionsSorted(@RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy,
@@ -54,7 +54,7 @@ public class TransactionController {
         return transactionService.findAllTransactionsSorted(sortBy, sortDir);
     }
 
-    // http://localhost:8080/transactions/all-by-page-sorted?page=1&size=10&sort=field&dir=direction
+    // http://localhost:8080/v1/transactions/all-by-page-sorted?page=1&size=10&sort=field&dir=direction
     @GetMapping(path = "/all-by-page-sorted")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Transaction> findAllTransactionsByPageSorted(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
@@ -64,28 +64,28 @@ public class TransactionController {
         return transactionService.findAllTransactionsByPageSorted(pageNumber, pageSize, sortBy, sortDir);
     }
 
-    // http://localhost:8080/transactions/save
+    // http://localhost:8080/v1/transactions/save
     @PostMapping(path = "/save")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Transaction saveTransaction(@RequestBody Transaction transaction) {
         return transactionService.saveTransaction(transaction);
     }
 
-    // http://localhost:8080/transactions/save-all
+    // http://localhost:8080/v1/transactions/save-all
     @PostMapping(path = "/save-all")
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Transaction> saveAllTransactions(@RequestBody List<Transaction> transactions) {
         return transactionService.saveAllTransactions(transactions);
     }
 
-    // http://localhost:8080/transactions/update/{id}
+    // http://localhost:8080/v1/transactions/update/{id}
     @PutMapping("/update/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Transaction updateTransaction(@RequestBody Transaction newTransaction, @PathVariable(value = "id") Long transactionId) {
         return transactionService.updateTransaction(newTransaction, transactionId);
     }
 
-    // http://localhost:8080/transactions/delete/{id}
+    // http://localhost:8080/v1/transactions/delete/{id}
     @DeleteMapping(path = {"/delete/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public String deleteTransactionById(@PathVariable(value = "id") Long transactionId) {
