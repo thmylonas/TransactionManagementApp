@@ -6,6 +6,10 @@ import com.thomasmylonas.authentication_microservice_app.helpers.HelperClass;
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -46,6 +50,27 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> findAllTransactions() {
         return transactionRepository.findAll();
+    }
+
+    @Override
+    public List<Transaction> findAllTransactionsByPage(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
+        return transactionsPage.getContent();
+    }
+
+    @Override
+    public List<Transaction> findAllTransactionsSorted(String sortBy, String sortDir) {
+        Sort sort = retrieveSort(sortBy, sortDir);
+        return transactionRepository.findAll(sort);
+    }
+
+    @Override
+    public List<Transaction> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir) {
+        Sort sort = retrieveSort(sortBy, sortDir);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
+        return transactionsPage.getContent();
     }
 
     @Override
@@ -102,5 +127,9 @@ public class TransactionServiceImpl implements TransactionService {
                     .build());
         }
         return transactions;
+    }
+
+    private Sort retrieveSort(String sortBy, String sortDir) {
+        return sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
     }
 }

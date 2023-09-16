@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,32 @@ public class TransactionController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<Transaction> findAllTransactions() {
         return transactionService.findAllTransactions();
+    }
+
+    // http://localhost:8081/transactions/all-by-page?page=1&size=10
+    @GetMapping(path = "/all-by-page")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Transaction> findAllTransactionsByPage(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
+                                                       @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+        return transactionService.findAllTransactionsByPage(pageNumber, pageSize);
+    }
+
+    // http://localhost:8081/transactions/all-sorted?sort=field&dir=direction
+    @GetMapping(path = "/all-sorted")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Transaction> findAllTransactionsSorted(@RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy,
+                                                       @RequestParam(value = "dir", defaultValue = "asc", required = false) String sortDir) {
+        return transactionService.findAllTransactionsSorted(sortBy, sortDir);
+    }
+
+    // http://localhost:8081/transactions/all-by-page-sorted?page=1&size=10&sort=field&dir=direction
+    @GetMapping(path = "/all-by-page-sorted")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Transaction> findAllTransactionsByPageSorted(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
+                                                             @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize,
+                                                             @RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy,
+                                                             @RequestParam(value = "dir", defaultValue = "asc", required = false) String sortDir) {
+        return transactionService.findAllTransactionsByPageSorted(pageNumber, pageSize, sortBy, sortDir);
     }
 
     // http://localhost:8081/transactions/save
