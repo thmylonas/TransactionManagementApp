@@ -2,7 +2,10 @@ package com.thomasmylonas.authentication_microservice_app.helpers;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -27,10 +30,11 @@ public class HelperClass {
         return map;
     }
 
-    public static Timestamp randomTimestamp() {
-        long offset = Timestamp.valueOf("2012-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2014-01-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        return new Timestamp(offset + (long) (Math.random() * diff));
+    public static LocalDateTime randomTimestamp() {
+
+        LocalDate localDate = LocalDate.now()
+                .minus(Period.ofDays((RANDOM.nextInt(2500))));
+        LocalTime localTime = LocalTime.of(RANDOM.nextInt(23), RANDOM.nextInt(59), RANDOM.nextInt(59));
+        return LocalDateTime.of(localDate, localTime);
     }
 }
