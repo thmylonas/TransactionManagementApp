@@ -38,12 +38,12 @@ public class AuthenticationMicroserviceAppApplication {
     }
 
     private static void createTestTransactionsInThisMicroservice(TransactionServiceImpl transactionService) {
-        transactionService.sendTransactions("http://localhost:8080/transactions/save-all",
+        transactionService.sendTransactions("http://localhost:8080/v1/transactions/save-all",
                 transactionService.generateTransactions(HardCodedTestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
     }
 
     private static void sendTransactionsInTransactionMicroservice(TransactionServiceImpl transactionService) {
-        transactionService.sendTransactions("http://localhost:8081/transactions/save-all",
+        transactionService.sendTransactions("http://localhost:8081/v1/transactions/save-all",
                 transactionService.generateTransactions(HardCodedTestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
     }
 }
