@@ -3,8 +3,8 @@ package com.thomasmylonas.authentication_microservice_app.services;
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
 import com.thomasmylonas.authentication_microservice_app.exceptions.ItemNotFoundException;
 import com.thomasmylonas.authentication_microservice_app.helpers.HelperClass;
+import com.thomasmylonas.authentication_microservice_app.models.response.ResponseSuccess;
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,8 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .uri(requestUrl)
                 .body(BodyInserters.fromValue(transactions))
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Transaction>>() {
-                })
+                .toEntity(ResponseSuccess.class)
                 .block();
     }
 
