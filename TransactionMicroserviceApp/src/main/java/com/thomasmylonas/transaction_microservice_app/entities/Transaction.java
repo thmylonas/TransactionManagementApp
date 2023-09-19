@@ -15,9 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity(name = "Transaction")
@@ -33,8 +31,7 @@ public class Transaction {
     private Long id;
 
     @Column(name = "Timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     @Column(name = "Type")
     private String type;
