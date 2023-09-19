@@ -2,8 +2,8 @@ package com.thomasmylonas.authentication_microservice_app.helpers;
 
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class HardCodedTestDataProvider {
 
     public static final List<Transaction> TRANSACTIONS_LIST_HARD_CODED = Arrays.asList(
             Transaction.builder()
-                    .timestamp(new Date())
+                    .timestamp(LocalDateTime.now())
                     .type("Type1")
                     .actor("Actor1")
                     .transactionData(new HashMap<>() {{
@@ -23,7 +23,7 @@ public class HardCodedTestDataProvider {
                     }})
                     .build(),
             Transaction.builder()
-                    .timestamp(new Date())
+                    .timestamp(LocalDateTime.now())
                     .type("Type2")
                     .actor("Actor2")
                     .transactionData(new HashMap<>() {{
@@ -34,7 +34,7 @@ public class HardCodedTestDataProvider {
                     }})
                     .build(),
             Transaction.builder()
-                    .timestamp(new Date())
+                    .timestamp(LocalDateTime.now())
                     .type("Type3")
                     .actor("Actor3")
                     .transactionData(new HashMap<>() {{
