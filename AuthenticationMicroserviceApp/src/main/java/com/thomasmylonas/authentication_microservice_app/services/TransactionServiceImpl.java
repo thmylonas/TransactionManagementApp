@@ -88,18 +88,18 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.findById(id)
                 .map(transaction -> {
                     if (Objects.nonNull(newTransaction.getTimestamp())) {
-                        newTransaction.setTimestamp(newTransaction.getTimestamp());
+                        transaction.setTimestamp(newTransaction.getTimestamp());
                     }
                     if (Objects.nonNull(newTransaction.getType()) && !newTransaction.getType().isEmpty()) {
-                        newTransaction.setType(newTransaction.getType());
+                        transaction.setType(newTransaction.getType());
                     }
                     if (Objects.nonNull(newTransaction.getActor()) && !newTransaction.getActor().isEmpty()) {
-                        newTransaction.setActor(newTransaction.getActor());
+                        transaction.setActor(newTransaction.getActor());
                     }
                     if (Objects.nonNull(newTransaction.getTransactionData()) && !newTransaction.getTransactionData().isEmpty()) {
-                        newTransaction.setTransactionData(newTransaction.getTransactionData());
+                        transaction.setTransactionData(newTransaction.getTransactionData());
                     }
-                    return saveTransaction(newTransaction);
+                    return transactionRepository.save(transaction);
                 })
                 .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
     }
