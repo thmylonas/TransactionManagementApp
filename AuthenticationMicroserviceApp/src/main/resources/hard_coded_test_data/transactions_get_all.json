@@ -1,52 +1,125 @@
-[
-  {
-    "id": 1,
-    "timestamp": "2013-08-20T18:59:32.058+00:00",
-    "type": "Type_328482",
-    "actor": "Actor_38547",
-    "transactionData": {
-      "Key_265854": "Data_90749",
-      "Key_379455": "Data_31018",
-      "Key_770453": "Data_857731",
-      "Key_957936": "Data_443715",
-      "Key_318486": "Data_917229"
-    }
-  },
-  {
-    "id": 2,
-    "timestamp": "2012-06-25T00:54:44.851+00:00",
-    "type": "Type_39404",
-    "actor": "Actor_558031",
-    "transactionData": {
-      "Key_702422": "Data_630693"
-    }
-  },
-  {
-    "id": 3,
-    "timestamp": "2012-10-30T06:05:40.916+00:00",
-    "type": "Type_223277",
-    "actor": "Actor_537578",
-    "transactionData": {
-      "Key_995392": "Data_992077",
-      "Key_193530": "Data_238672",
-      "Key_192232": "Data_295821"
-    }
-  },
-  {
-    "id": 4,
-    "timestamp": "2012-07-10T16:24:40.145+00:00",
-    "type": "Type_127512",
-    "actor": "Actor_886179",
-    "transactionData": {}
-  },
-  {
-    "id": 5,
-    "timestamp": "2012-12-29T21:23:00.992+00:00",
-    "type": "Type_32723",
-    "actor": "Actor_753235",
-    "transactionData": {
-      "Key_994269": "Data_431801",
-      "Key_708116": "Data_304738"
-    }
+{
+  "timestamp": "20-09-2023 10:24:18",
+  "statusCode": "200 OK",
+  "message": "Success: The transactions are found!",
+  "path": "http://localhost:8081/v1/transactions/all",
+  "data": {
+    "transactions": [
+      {
+        "id": 1,
+        "timestamp": "2018-09-29T02:22:21",
+        "type": "Type_920391",
+        "actor": "Actor_917668",
+        "transactionData": {
+          "Key_951552": "Data_995979",
+          "Key_432362": "Data_607373"
+        }
+      },
+      {
+        "id": 2,
+        "timestamp": "2017-11-06T11:58:51",
+        "type": "Type_982117",
+        "actor": "Actor_998999",
+        "transactionData": {
+          "Key_875070": "Data_344294",
+          "Key_643030": "Data_937695",
+          "Key_566222": "Data_938506",
+          "Key_915877": "Data_634338",
+          "Key_697377": "Data_460724",
+          "Key_193331": "Data_984770",
+          "Key_680824": "Data_511536"
+        }
+      },
+      {
+        "id": 3,
+        "timestamp": "2017-10-01T16:34:34",
+        "type": "Type_720056",
+        "actor": "Actor_305137",
+        "transactionData": {
+          "Key_908377": "Data_964095",
+          "Key_46570": "Data_796019",
+          "Key_158630": "Data_516612",
+          "Key_818342": "Data_773751",
+          "Key_365669": "Data_667430"
+        }
+      },
+      {
+        "id": 4,
+        "timestamp": "2023-07-04T01:37:39",
+        "type": "Type_674092",
+        "actor": "Actor_749589",
+        "transactionData": {
+          "Key_180811": "Data_812734",
+          "Key_399742": "Data_928561"
+        }
+      },
+      {
+        "id": 5,
+        "timestamp": "2020-09-18T13:42:17",
+        "type": "Type_771402",
+        "actor": "Actor_719847",
+        "transactionData": {
+          "Key_468724": "Data_464778",
+          "Key_768056": "Data_975832",
+          "Key_305348": "Data_550604",
+          "Key_977557": "Data_383519",
+          "Key_487722": "Data_386362",
+          "Key_533868": "Data_961157",
+          "Key_804274": "Data_943523",
+          "Key_349720": "Data_127084",
+          "Key_593010": "Data_750270"
+        }
+      },
+      {
+        "id": 6,
+        "timestamp": "2013-08-20T18:59:32",
+        "type": "Type_328482",
+        "actor": "Actor_38547",
+        "transactionData": {
+          "Key_265854": "Data_90749",
+          "Key_379455": "Data_31018",
+          "Key_770453": "Data_857731",
+          "Key_957936": "Data_443715",
+          "Key_318486": "Data_917229"
+        }
+      },
+      {
+        "id": 7,
+        "timestamp": "2012-06-25T00:54:44",
+        "type": "Type_39404",
+        "actor": "Actor_558031",
+        "transactionData": {
+          "Key_702422": "Data_630693"
+        }
+      },
+      {
+        "id": 8,
+        "timestamp": "2012-10-30T06:05:40",
+        "type": "Type_223277",
+        "actor": "Actor_537578",
+        "transactionData": {
+          "Key_995392": "Data_992077",
+          "Key_193530": "Data_238672",
+          "Key_192232": "Data_295821"
+        }
+      },
+      {
+        "id": 9,
+        "timestamp": "2012-07-10T16:24:40",
+        "type": "Type_127512",
+        "actor": "Actor_886179",
+        "transactionData": {}
+      },
+      {
+        "id": 10,
+        "timestamp": "2012-12-29T21:23:00",
+        "type": "Type_32723",
+        "actor": "Actor_753235",
+        "transactionData": {
+          "Key_994269": "Data_431801",
+          "Key_708116": "Data_304738"
+        }
+      }
+    ]
   }
-]
+}
