@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -90,10 +91,10 @@ public class TransactionServiceImpl implements TransactionService {
                     if (Objects.nonNull(newTransaction.getTimestamp())) {
                         transaction.setTimestamp(newTransaction.getTimestamp());
                     }
-                    if (Objects.nonNull(newTransaction.getType()) && !newTransaction.getType().isEmpty()) {
+                    if (StringUtils.hasLength(newTransaction.getType())) {
                         transaction.setType(newTransaction.getType());
                     }
-                    if (Objects.nonNull(newTransaction.getActor()) && !newTransaction.getActor().isEmpty()) {
+                    if (StringUtils.hasLength(newTransaction.getActor())) {
                         transaction.setActor(newTransaction.getActor());
                     }
                     if (Objects.nonNull(newTransaction.getTransactionData()) && !newTransaction.getTransactionData().isEmpty()) {
