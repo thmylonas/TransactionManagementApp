@@ -23,7 +23,7 @@ public class TransactionExceptionHandler {
      * This default value only in DEV environment/profile. Set "false" in PROD environment/profile.
      * The client to see the stacktrace, must add in the request URI the "?trace=true"
      */
-    @Value("${stacktrace.print:true}")
+    @Value(value = "${stacktrace.print:true}")
     private boolean printStacktrace;
 
     @ExceptionHandler(value = {ItemNotFoundException.class})
