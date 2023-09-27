@@ -3,7 +3,7 @@ package com.thomasmylonas.authentication_microservice_app.services;
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
 import com.thomasmylonas.authentication_microservice_app.exceptions.ItemNotFoundException;
 import com.thomasmylonas.authentication_microservice_app.helpers.HelperClass;
-import com.thomasmylonas.authentication_microservice_app.models.response.ResponseSuccess;
+import com.thomasmylonas.authentication_microservice_app.models_dtos.response.ResponseSuccess;
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;

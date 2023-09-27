@@ -1,7 +1,7 @@
 package com.thomasmylonas.transaction_microservice_app.controllers.advice_controllers;
 
 import com.thomasmylonas.transaction_microservice_app.exceptions.ItemNotFoundException;
-import com.thomasmylonas.transaction_microservice_app.models.response.ResponseError;
+import com.thomasmylonas.transaction_microservice_app.models_dtos.response.ResponseError;
 import com.thomasmylonas.transaction_microservice_app.helpers.HelperClass;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

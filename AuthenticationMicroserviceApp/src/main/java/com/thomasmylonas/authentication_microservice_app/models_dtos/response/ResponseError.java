@@ -1,4 +1,4 @@
-package com.thomasmylonas.authentication_microservice_app.models.response;
+package com.thomasmylonas.authentication_microservice_app.models_dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

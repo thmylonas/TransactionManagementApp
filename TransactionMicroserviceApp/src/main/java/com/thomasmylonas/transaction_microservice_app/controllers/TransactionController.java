@@ -1,8 +1,8 @@
 package com.thomasmylonas.transaction_microservice_app.controllers;
 
 import com.thomasmylonas.transaction_microservice_app.entities.Transaction;
-import com.thomasmylonas.transaction_microservice_app.models.response.ResponseHandler;
-import com.thomasmylonas.transaction_microservice_app.models.response.ResponseSuccess;
+import com.thomasmylonas.transaction_microservice_app.models_dtos.ResponseHandler;
+import com.thomasmylonas.transaction_microservice_app.models_dtos.response.ResponseSuccess;
 import com.thomasmylonas.transaction_microservice_app.services.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

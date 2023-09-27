@@ -1,5 +1,6 @@
-package com.thomasmylonas.authentication_microservice_app.models.response;
+package com.thomasmylonas.authentication_microservice_app.models_dtos;
 
+import com.thomasmylonas.authentication_microservice_app.models_dtos.response.ResponseSuccess;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
