@@ -2,17 +2,24 @@ package com.thomasmylonas.transaction_microservice_app.services;
 
 import com.thomasmylonas.transaction_microservice_app.entities.Transaction;
 import com.thomasmylonas.transaction_microservice_app.exceptions.ItemNotFoundException;
+import com.thomasmylonas.transaction_microservice_app.models_dtos.EntityDTOMapper;
+import com.thomasmylonas.transaction_microservice_app.models_dtos.dtos.TransactionDTO;
 import com.thomasmylonas.transaction_microservice_app.repositories.TransactionRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service(value = "transactionService")
 public class TransactionServiceImpl implements TransactionService {
@@ -24,49 +31,66 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction findTransactionById(Long id) {
-        return transactionRepository.findById(id)
+    public TransactionDTO findTransactionById(Long id) {
+        Transaction order = transactionRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
+        return EntityDTOMapper.mapToDTO(order);
     }
 
     @Override
-    public List<Transaction> findAllTransactions() {
-        return transactionRepository.findAll();
+    public List<TransactionDTO> findAllTransactions() {
+        return transactionRepository.findAll().stream()
+                .map(EntityDTOMapper::mapToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<Transaction> findAllTransactionsByPage(int pageNumber, int pageSize) {
+    public List<TransactionDTO> findAllTransactionsByPage(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
-        return transactionsPage.getContent();
+        List<TransactionDTO> transactionDTOs = transactionRepository.findAll(pageable).stream()
+                .map(EntityDTOMapper::mapToDTO).collect(Collectors.toList());
+        Page<TransactionDTO> transactionDTOsPage = new PageImpl<>(transactionDTOs);
+        return transactionDTOsPage.getContent();
     }
 
     @Override
-    public List<Transaction> findAllTransactionsSorted(String sortBy, String sortDir) {
+    public List<TransactionDTO> findAllTransactionsSorted(String sortBy, String sortDir) {
         Sort sort = retrieveSort(sortBy, sortDir);
-        return transactionRepository.findAll(sort);
+        return transactionRepository.findAll(sort).stream()
+                .map(EntityDTOMapper::mapToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<Transaction> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir) {
+    public List<TransactionDTO> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir) {
         Sort sort = retrieveSort(sortBy, sortDir);
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
-        return transactionsPage.getContent();
+        List<TransactionDTO> transactionDTOs = transactionRepository.findAll(pageable).stream()
+                .map(EntityDTOMapper::mapToDTO).collect(Collectors.toList());
+        Page<TransactionDTO> transactionDTOsPage = new PageImpl<>(transactionDTOs);
+        return transactionDTOsPage.getContent();
     }
 
     @Override
-    public Transaction saveTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public TransactionDTO saveTransaction(TransactionDTO transactionDTO) {
+        Transaction transaction = transactionRepository.save(EntityDTOMapper.mapToEntity(transactionDTO));
+        return EntityDTOMapper.mapToDTO(transaction);
     }
 
     @Override
-    public List<Transaction> saveAllTransactions(List<Transaction> transactions) {
-        return transactionRepository.saveAll(transactions);
+    public List<TransactionDTO> saveAllTransactions(List<TransactionDTO> transactionDTOs) {
+
+        List<Transaction> transactions = transactionDTOs.stream()
+                .map(EntityDTOMapper::mapToEntity)
+                .collect(Collectors.toList());
+        List<Transaction> transactionsResult = transactionRepository.saveAll(transactions);
+        return transactionsResult.stream()
+                .map(EntityDTOMapper::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Transaction updateTransaction(Transaction newTransaction, Long id) {
+    public TransactionDTO updateTransaction(TransactionDTO newTransactionDTO, Long id) {
+
+        Transaction newTransaction = EntityDTOMapper.mapToEntity(newTransactionDTO);
 
         return transactionRepository.findById(id)
                 .map(transaction -> {
@@ -84,7 +108,24 @@ public class TransactionServiceImpl implements TransactionService {
                     }
                     return transactionRepository.save(transaction);
                 })
+                .map(EntityDTOMapper::mapToDTO)
                 .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
+    }
+
+    @Override
+    public TransactionDTO partialUpdateTransaction(Map<String, ?> fields, Long id) {
+
+        Transaction transactionToUpdate = transactionRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
+
+        fields.forEach((field, fieldValue) -> {
+            Field transactionField = ReflectionUtils.findField(Transaction.class, field);
+            if (transactionField != null) {
+                transactionField.setAccessible(true);
+                ReflectionUtils.setField(transactionField, transactionToUpdate, fieldValue);
+            }
+        });
+        return EntityDTOMapper.mapToDTO(transactionRepository.save(transactionToUpdate));
     }
 
     @Override

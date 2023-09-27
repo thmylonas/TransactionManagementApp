@@ -24,7 +24,7 @@ public interface TransactionService {
 
     List<TransactionDTO> saveAllTransactions(List<TransactionDTO> TransactionDTOs);
 
-    TransactionDTO updateTransaction(Transaction newTransaction, Long id);
+    TransactionDTO updateTransaction(TransactionDTO newTransactionDTO, Long id);
 
     TransactionDTO partialUpdateTransaction(Map<String, ?> fields, Long id);
 

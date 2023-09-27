@@ -1,6 +1,5 @@
 package com.thomasmylonas.transaction_microservice_app.services;
 
-import com.thomasmylonas.transaction_microservice_app.entities.Transaction;
 import com.thomasmylonas.transaction_microservice_app.models_dtos.dtos.TransactionDTO;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public interface TransactionService {
 
     List<TransactionDTO> saveAllTransactions(List<TransactionDTO> TransactionDTOs);
 
-    TransactionDTO updateTransaction(Transaction newTransaction, Long id);
+    TransactionDTO updateTransaction(TransactionDTO newTransactionDTO, Long id);
 
     TransactionDTO partialUpdateTransaction(Map<String, ?> fields, Long id);
 
