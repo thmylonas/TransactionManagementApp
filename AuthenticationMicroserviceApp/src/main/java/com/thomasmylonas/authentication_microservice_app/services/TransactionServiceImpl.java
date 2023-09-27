@@ -6,6 +6,7 @@ import com.thomasmylonas.authentication_microservice_app.models_dtos.EntityDTOMa
 import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDTO;
 import com.thomasmylonas.authentication_microservice_app.models_dtos.response.ResponseSuccess;
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,15 +26,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service(value = "transactionService")
+@AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final WebClient webClient;
-
-    public TransactionServiceImpl(TransactionRepository transactionRepository, WebClient webClient) {
-        this.transactionRepository = transactionRepository;
-        this.webClient = webClient;
-    }
 
     @Override
     public void sendTransactions(String requestUrl, List<Transaction> transactions) {
