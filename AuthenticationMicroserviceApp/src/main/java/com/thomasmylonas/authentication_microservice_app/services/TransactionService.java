@@ -1,28 +1,32 @@
 package com.thomasmylonas.authentication_microservice_app.services;
 
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
+import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TransactionService {
 
     void sendTransactions(String requestUrl, List<Transaction> transactions);
 
-    Transaction findTransactionById(Long id);
+    TransactionDTO findTransactionById(Long id);
 
-    List<Transaction> findAllTransactions();
+    List<TransactionDTO> findAllTransactions();
 
-    List<Transaction> findAllTransactionsByPage(int pageNumber, int pageSize);
+    List<TransactionDTO> findAllTransactionsByPage(int pageNumber, int pageSize);
 
-    List<Transaction> findAllTransactionsSorted(String sortBy, String sortDir);
+    List<TransactionDTO> findAllTransactionsSorted(String sortBy, String sortDir);
 
-    List<Transaction> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir);
+    List<TransactionDTO> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir);
 
-    Transaction saveTransaction(Transaction transaction);
+    TransactionDTO saveTransaction(TransactionDTO transactionDTO);
 
-    List<Transaction> saveAllTransactions(List<Transaction> transactions);
+    List<TransactionDTO> saveAllTransactions(List<TransactionDTO> TransactionDTOs);
 
-    Transaction updateTransaction(Transaction newTransaction, Long id);
+    TransactionDTO updateTransaction(Transaction newTransaction, Long id);
+
+    TransactionDTO partialUpdateTransaction(Map<String, ?> fields, Long id);
 
     void deleteTransactionById(Long id);
 }
