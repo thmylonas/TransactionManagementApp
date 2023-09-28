@@ -19,7 +19,7 @@ public interface TransactionService {
 
     TransactionDTO saveTransaction(TransactionDTO transactionDTO);
 
-    List<TransactionDTO> saveAllTransactions(List<TransactionDTO> TransactionDTOs);
+    List<TransactionDTO> saveAllTransactions(List<TransactionDTO> transactionDTOs);
 
     TransactionDTO updateTransaction(TransactionDTO newTransactionDTO, Long id);
 
