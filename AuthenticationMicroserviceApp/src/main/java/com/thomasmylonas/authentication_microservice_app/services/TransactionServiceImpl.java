@@ -45,9 +45,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDTO findTransactionById(Long id) {
-        Transaction order = transactionRepository.findById(id)
+        Transaction transaction = transactionRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException(Transaction.class.getSimpleName(), id));
-        return EntityDTOMapper.mapToDTO(order);
+        return EntityDTOMapper.mapToDTO(transaction);
     }
 
     @Override
