@@ -84,8 +84,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDTO saveTransaction(TransactionDTO transactionDTO) {
-        Transaction transaction = transactionRepository.save(EntityDTOMapper.mapToEntity(transactionDTO));
-        return EntityDTOMapper.mapToDTO(transaction);
+        Transaction savedTransaction = transactionRepository.save(EntityDTOMapper.mapToEntity(transactionDTO));
+        return EntityDTOMapper.mapToDTO(savedTransaction);
     }
 
     @Override
@@ -94,8 +94,8 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactions = transactionDTOs.stream()
                 .map(EntityDTOMapper::mapToEntity)
                 .collect(Collectors.toList());
-        List<Transaction> transactionsResult = transactionRepository.saveAll(transactions);
-        return transactionsResult.stream()
+        List<Transaction> savedTransactions = transactionRepository.saveAll(transactions);
+        return savedTransactions.stream()
                 .map(EntityDTOMapper::mapToDTO)
                 .collect(Collectors.toList());
     }
