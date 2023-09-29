@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/v1/transactions")
+@RequestMapping(path = {"/v1/transactions"})
 @RequiredArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
 
     // http://localhost:8081/v1/transactions/{id}
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findTransactionById(@PathVariable(value = "id") Long transactionId) {
         TransactionDTO transactionDTO = transactionService.findTransactionById(transactionId);
@@ -39,7 +39,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/all
-    @GetMapping(path = "/all")
+    @GetMapping(path = {"/all"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactions() {
         final String message = "Success: The transactions are found!";
@@ -48,7 +48,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/all-by-page?page=1&size=10
-    @GetMapping(path = "/all-by-page")
+    @GetMapping(path = {"/all-by-page"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactionsByPage(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
                                                                      @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
@@ -58,7 +58,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/all-sorted?sort=field&dir=direction
-    @GetMapping(path = "/all-sorted")
+    @GetMapping(path = {"/all-sorted"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactionsSorted(@RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy,
                                                                      @RequestParam(value = "dir", defaultValue = "asc", required = false) String sortDir) {
@@ -68,7 +68,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/all-by-page-sorted?page=1&size=10&sort=field&dir=direction
-    @GetMapping(path = "/all-by-page-sorted")
+    @GetMapping(path = {"/all-by-page-sorted"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactionsByPageSorted(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
                                                                            @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize,
@@ -80,7 +80,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/save
-    @PostMapping(path = "/save")
+    @PostMapping(path = {"/save"})
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<ResponseSuccess> saveTransaction(@RequestBody TransactionDTO transactionDTO) {
         TransactionDTO savedTransactionDTO = transactionService.saveTransaction(transactionDTO);
@@ -90,7 +90,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/save-all
-    @PostMapping(path = "/save-all")
+    @PostMapping(path = {"/save-all"})
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<ResponseSuccess> saveAllTransactions(@RequestBody List<TransactionDTO> transactionDTOs) {
         List<TransactionDTO> savedTransactionDTOs = transactionService.saveAllTransactions(transactionDTOs);
@@ -99,7 +99,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/update/{id}
-    @PutMapping("/update/{id}")
+    @PutMapping(path = {"/update/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> updateTransaction(@RequestBody TransactionDTO newTransactionDTO, @PathVariable(value = "id") Long transactionId) {
         TransactionDTO updatedTransactionDTO = transactionService.updateTransaction(newTransactionDTO, transactionId);
@@ -108,7 +108,7 @@ public class TransactionController {
     }
 
     // http://localhost:8081/v1/transactions/partial-update/{id}
-    @PatchMapping("/partial-update/{id}")
+    @PatchMapping(path = {"/partial-update/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> partialUpdateTransaction(@RequestBody Map<String, ?> fields, @PathVariable("id") Long transactionId) {
         TransactionDTO updatedTransactionDTO = transactionService.partialUpdateTransaction(fields, transactionId);
