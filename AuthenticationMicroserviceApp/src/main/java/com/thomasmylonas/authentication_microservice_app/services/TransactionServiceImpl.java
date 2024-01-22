@@ -2,6 +2,7 @@ package com.thomasmylonas.authentication_microservice_app.services;
 
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
 import com.thomasmylonas.authentication_microservice_app.exceptions.ItemNotFoundException;
+import com.thomasmylonas.authentication_microservice_app.helpers.HelperClass;
 import com.thomasmylonas.authentication_microservice_app.models_dtos.EntityDTOMapper;
 import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDTO;
 import com.thomasmylonas.authentication_microservice_app.models_dtos.response.ResponseSuccess;
@@ -20,6 +21,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -149,6 +151,28 @@ public class TransactionServiceImpl implements TransactionService {
         } catch (EmptyResultDataAccessException e) {
             throw new ItemNotFoundException(Transaction.class.getSimpleName(), id);
         }
+    }
+
+    /**
+     * TODO: Check the following:
+     * For a strange reason (???) this method accidentally, was deleted.
+     * A good idea, to move this method, as static method in: "TransactionRepository"
+     * 
+     * @param amount ******************************************************************
+     * @return ************************************************************************
+     */
+    public List<Transaction> generateTransactions(int amount) {
+
+        List<Transaction> transactions = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            transactions.add(Transaction.builder()
+                    .timestamp(HelperClass.randomTimestamp())
+                    .type("Type_" + HelperClass.RANDOM.nextInt(1_000_000))
+                    .actor("Actor_" + HelperClass.RANDOM.nextInt(1_000_000))
+                    .transactionData(HelperClass.generateData(HelperClass.RANDOM.nextInt(10)))
+                    .build());
+        }
+        return transactions;
     }
 
     private Sort retrieveSort(String sortBy, String sortDir) {
