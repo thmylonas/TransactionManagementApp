@@ -157,7 +157,7 @@ public class TransactionServiceImpl implements TransactionService {
      * TODO: Check the following:
      * For a strange reason (???) this method accidentally, was deleted.
      * A good idea, to move this method, as static method in: "TransactionRepository"
-     * 
+     *
      * @param amount ******************************************************************
      * @return ************************************************************************
      */
