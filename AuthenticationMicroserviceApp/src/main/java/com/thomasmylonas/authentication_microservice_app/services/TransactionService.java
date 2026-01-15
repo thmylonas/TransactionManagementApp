@@ -1,7 +1,7 @@
 package com.thomasmylonas.authentication_microservice_app.services;
 
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
-import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDTO;
+import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDto;
 
 import java.util.List;
 import java.util.Map;
@@ -10,23 +10,23 @@ public interface TransactionService {
 
     void sendTransactions(String requestUrl, List<Transaction> transactions);
 
-    TransactionDTO findTransactionById(Long id);
+    TransactionDto findTransactionById(Long id);
 
-    List<TransactionDTO> findAllTransactions();
+    List<TransactionDto> findAllTransactions();
 
-    List<TransactionDTO> findAllTransactionsByPage(int pageNumber, int pageSize);
+    List<TransactionDto> findAllTransactionsByPage(int pageNumber, int pageSize);
 
-    List<TransactionDTO> findAllTransactionsSorted(String sortBy, String sortDir);
+    List<TransactionDto> findAllTransactionsSorted(String sortBy, String sortDir);
 
-    List<TransactionDTO> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir);
+    List<TransactionDto> findAllTransactionsByPageSorted(int pageNumber, int pageSize, String sortBy, String sortDir);
 
-    TransactionDTO saveTransaction(TransactionDTO transactionDTO);
+    TransactionDto saveTransaction(TransactionDto transactionDto);
 
-    List<TransactionDTO> saveAllTransactions(List<TransactionDTO> TransactionDTOs);
+    List<TransactionDto> saveAllTransactions(List<TransactionDto> transactionDtos);
 
-    TransactionDTO updateTransaction(TransactionDTO newTransactionDTO, Long id);
+    TransactionDto updateTransaction(TransactionDto newTransactionDto, Long id);
 
-    TransactionDTO partialUpdateTransaction(Map<String, ?> fields, Long id);
+    TransactionDto partialUpdateTransaction(Map<String, ?> fields, Long id);
 
     void deleteTransactionById(Long id);
 }

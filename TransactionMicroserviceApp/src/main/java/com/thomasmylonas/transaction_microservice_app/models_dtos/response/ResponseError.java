@@ -2,22 +2,18 @@ package com.thomasmylonas.transaction_microservice_app.models_dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseError {
+@Builder
+public record ResponseError(
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private final LocalDateTime timestamp;
-    private final String statusCode;
-    private final String message;
-    private final String path; // "request URL"
-    private String stacktrace;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+        LocalDateTime timestamp,
+        String statusCode,
+        String message,
+        String path // "request URL"
+) {
 }

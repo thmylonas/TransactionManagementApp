@@ -1,16 +1,14 @@
 package com.thomasmylonas.authentication_microservice_app;
 
-import com.thomasmylonas.authentication_microservice_app.helpers.HardCodedTestDataProvider;
+import com.thomasmylonas.authentication_microservice_app.helpers.TestDataProvider;
 import com.thomasmylonas.authentication_microservice_app.repositories.TransactionRepository;
 import com.thomasmylonas.authentication_microservice_app.services.TransactionServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource(value = "classpath:app_properties/constants_properties.properties")
 public class AuthenticationMicroserviceAppApplication {
 
     public static void main(String[] args) {
@@ -34,16 +32,16 @@ public class AuthenticationMicroserviceAppApplication {
     }
 
     private static void createHardCodedTestDataInThisMicroservice(TransactionRepository transactionRepository) {
-        transactionRepository.saveAll(HardCodedTestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
+        transactionRepository.saveAll(TestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
     }
 
     private static void createTestTransactionsInThisMicroservice(TransactionServiceImpl transactionService) {
         transactionService.sendTransactions("http://localhost:8080/v1/transactions/save-all",
-                transactionService.generateTransactions(HardCodedTestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
+                transactionService.generateTransactions(TestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
     }
 
     private static void sendTransactionsInTransactionMicroservice(TransactionServiceImpl transactionService) {
         transactionService.sendTransactions("http://localhost:8081/v1/transactions/save-all",
-                transactionService.generateTransactions(HardCodedTestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
+                transactionService.generateTransactions(TestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
     }
 }

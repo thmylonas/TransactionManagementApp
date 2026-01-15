@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class HardCodedTestDataProvider {
+public class TestDataProvider {
 
     public static final int AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS = 5;
 

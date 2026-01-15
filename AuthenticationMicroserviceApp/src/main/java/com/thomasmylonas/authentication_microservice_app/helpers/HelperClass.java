@@ -1,7 +1,5 @@
 package com.thomasmylonas.authentication_microservice_app.helpers;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,13 +11,6 @@ import java.util.Random;
 public class HelperClass {
 
     public static final Random RANDOM = new Random();
-
-    public static String stringifyStacktrace(Exception e) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        return sw.toString();
-    }
 
     public static Map<String, String> generateData(int dataAmount) {
 

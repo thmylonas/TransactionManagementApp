@@ -1,21 +1,23 @@
-package com.thomasmylonas.authentication_microservice_app.models_dtos;
+package com.thomasmylonas.authentication_microservice_app.services;
 
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
-import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDTO;
+import com.thomasmylonas.authentication_microservice_app.models_dtos.dtos.TransactionDto;
+import org.springframework.stereotype.Service;
 
-public class EntityDTOMapper {
+@Service
+public class TransactionMapper {
 
     /*
     Mapping DTOs to Entities
     The DTOs come from the client-side input in the RequestBody. The entities will be given to the Repository layer
     */
 
-    public static Transaction mapToEntity(TransactionDTO transactionDTO) {
+    public Transaction toTransaction(TransactionDto transactionDto) {
         return Transaction.builder()
-                .timestamp(transactionDTO.getTimestamp())
-                .type(transactionDTO.getType())
-                .actor(transactionDTO.getActor())
-                .transactionData(transactionDTO.getTransactionData())
+                .timestamp(transactionDto.timestamp())
+                .type(transactionDto.type())
+                .actor(transactionDto.actor())
+                .transactionData(transactionDto.transactionData())
                 .build();
     }
 
@@ -24,8 +26,8 @@ public class EntityDTOMapper {
     The entities come from the Repository layer. The DTOs will be given to the client-side output in the ResponseBody
     */
 
-    public static TransactionDTO mapToDTO(Transaction transaction) {
-        return TransactionDTO.builder()
+    public TransactionDto fromTransaction(Transaction transaction) {
+        return TransactionDto.builder()
                 .id(transaction.getId())
                 .timestamp(transaction.getTimestamp())
                 .type(transaction.getType())

@@ -1,7 +1,7 @@
 package com.thomasmylonas.transaction_microservice_app.controllers;
 
 import com.thomasmylonas.transaction_microservice_app.models_dtos.ResponseHandler;
-import com.thomasmylonas.transaction_microservice_app.models_dtos.dtos.TransactionDTO;
+import com.thomasmylonas.transaction_microservice_app.models_dtos.dtos.TransactionDto;
 import com.thomasmylonas.transaction_microservice_app.models_dtos.response.ResponseSuccess;
 import com.thomasmylonas.transaction_microservice_app.services.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -23,101 +23,101 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = {"/v1/transactions"})
+@RequestMapping(path = {"/api/v1/transactions"})
 @RequiredArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
 
-    // http://localhost:8081/v1/transactions/{id}
+    // http://localhost:8081/api/v1/transactions/{id}
     @GetMapping(path = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findTransactionById(@PathVariable(value = "id") Long transactionId) {
-        TransactionDTO transactionDTO = transactionService.findTransactionById(transactionId);
+        TransactionDto transactionDto = transactionService.findTransactionById(transactionId);
         final String message = String.format("Success: The transaction with the ID %d is found!", transactionId);
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transaction", transactionDTO));
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transaction", transactionDto));
     }
 
-    // http://localhost:8081/v1/transactions/all
-    @GetMapping(path = {"/all"})
+    // http://localhost:8081/api/v1/transactions
+    @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactions() {
         final String message = "Success: The transactions are found!";
-        List<TransactionDTO> transactionDTOs = transactionService.findAllTransactions();
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDTOs));
+        List<TransactionDto> transactionDtos = transactionService.findAllTransactions();
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDtos));
     }
 
-    // http://localhost:8081/v1/transactions/all-by-page?page=1&size=10
-    @GetMapping(path = {"/all-by-page"})
+    // http://localhost:8081/api/v1/transactions?page=1&size=10
+    @GetMapping(params = {"page", "size"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactionsByPage(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
                                                                      @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
         final String message = "Success: The transactions by-page are found!";
-        List<TransactionDTO> transactionDTOs = transactionService.findAllTransactionsByPage(pageNumber, pageSize);
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDTOs));
+        List<TransactionDto> transactionDtos = transactionService.findAllTransactionsByPage(pageNumber, pageSize);
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDtos));
     }
 
-    // http://localhost:8081/v1/transactions/all-sorted?sort=field&dir=direction
-    @GetMapping(path = {"/all-sorted"})
+    // http://localhost:8081/api/v1/transactions?sort=field&dir=direction
+    @GetMapping(params = {"sort", "dir"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactionsSorted(@RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy,
                                                                      @RequestParam(value = "dir", defaultValue = "asc", required = false) String sortDir) {
         final String message = "Success: The transactions sorted are found!";
-        List<TransactionDTO> transactionDTOs = transactionService.findAllTransactionsSorted(sortBy, sortDir);
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDTOs));
+        List<TransactionDto> transactionDtos = transactionService.findAllTransactionsSorted(sortBy, sortDir);
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDtos));
     }
 
-    // http://localhost:8081/v1/transactions/all-by-page-sorted?page=1&size=10&sort=field&dir=direction
-    @GetMapping(path = {"/all-by-page-sorted"})
+    // http://localhost:8081/api/v1/transactions?page=1&size=10&sort=field&dir=direction
+    @GetMapping(params = {"page", "size", "sort", "dir"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> findAllTransactionsByPageSorted(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
                                                                            @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize,
                                                                            @RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy,
                                                                            @RequestParam(value = "dir", defaultValue = "asc", required = false) String sortDir) {
         final String message = "Success: The transactions by-page-sorted are found!";
-        List<TransactionDTO> transactionDTOs = transactionService.findAllTransactionsByPageSorted(pageNumber, pageSize, sortBy, sortDir);
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDTOs));
+        List<TransactionDto> transactionDtos = transactionService.findAllTransactionsByPageSorted(pageNumber, pageSize, sortBy, sortDir);
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transactions", transactionDtos));
     }
 
-    // http://localhost:8081/v1/transactions/save
-    @PostMapping(path = {"/save"})
+    // http://localhost:8081/api/v1/transactions
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<ResponseSuccess> saveTransaction(@RequestBody TransactionDTO transactionDTO) {
-        TransactionDTO savedTransactionDTO = transactionService.saveTransaction(transactionDTO);
+    public ResponseEntity<ResponseSuccess> saveTransaction(@RequestBody TransactionDto transactionDto) {
+        TransactionDto savedTransactionDto = transactionService.saveTransaction(transactionDto);
         final String message = "Created: The transaction has been created successfully!";
-        final String savedTransactionUri = "/v1/transactions/" + savedTransactionDTO.getId();
-        return ResponseHandler.buildResponse(message, HttpStatus.CREATED, savedTransactionUri, Map.of("transaction", savedTransactionDTO));
+        final String savedTransactionUri = "/v1/transactions/" + savedTransactionDto.id();
+        return ResponseHandler.buildResponse(message, HttpStatus.CREATED, savedTransactionUri, Map.of("transaction", savedTransactionDto));
     }
 
-    // http://localhost:8081/v1/transactions/save-all
-    @PostMapping(path = {"/save-all"})
+    // http://localhost:8081/api/v1/transactions/all
+    @PostMapping(path = {"/all"})
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<ResponseSuccess> saveAllTransactions(@RequestBody List<TransactionDTO> transactionDTOs) {
-        List<TransactionDTO> savedTransactionDTOs = transactionService.saveAllTransactions(transactionDTOs);
+    public ResponseEntity<ResponseSuccess> saveAllTransactions(@RequestBody List<TransactionDto> transactionDtos) {
+        List<TransactionDto> savedTransactionDtos = transactionService.saveAllTransactions(transactionDtos);
         final String message = "Created: The transactions have been created successfully!";
-        return ResponseHandler.buildResponse(message, HttpStatus.CREATED, Map.of("transactions", savedTransactionDTOs));
+        return ResponseHandler.buildResponse(message, HttpStatus.CREATED, Map.of("transactions", savedTransactionDtos));
     }
 
-    // http://localhost:8081/v1/transactions/update/{id}
-    @PutMapping(path = {"/update/{id}"})
+    // http://localhost:8081/api/v1/transactions/{id}
+    @PutMapping(path = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<ResponseSuccess> updateTransaction(@RequestBody TransactionDTO newTransactionDTO, @PathVariable(value = "id") Long transactionId) {
-        TransactionDTO updatedTransactionDTO = transactionService.updateTransaction(newTransactionDTO, transactionId);
+    public ResponseEntity<ResponseSuccess> updateTransaction(@RequestBody TransactionDto newTransactionDto, @PathVariable(value = "id") Long transactionId) {
+        TransactionDto updatedTransactionDto = transactionService.updateTransaction(newTransactionDto, transactionId);
         final String message = "Success: The transaction with ID " + transactionId + " has been updated successfully!";
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transaction", updatedTransactionDTO));
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transaction", updatedTransactionDto));
     }
 
-    // http://localhost:8081/v1/transactions/partial-update/{id}
-    @PatchMapping(path = {"/partial-update/{id}"})
+    // http://localhost:8081/api/v1/transactions/{id}
+    @PatchMapping(path = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> partialUpdateTransaction(@RequestBody Map<String, ?> fields, @PathVariable("id") Long transactionId) {
-        TransactionDTO updatedTransactionDTO = transactionService.partialUpdateTransaction(fields, transactionId);
+        TransactionDto updatedTransactionDto = transactionService.partialUpdateTransaction(fields, transactionId);
         final String message = "Success: The transaction with ID " + transactionId + " has been partially updated successfully!";
-        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transaction", updatedTransactionDTO));
+        return ResponseHandler.buildResponse(message, HttpStatus.OK, Map.of("transaction", updatedTransactionDto));
     }
 
-    // http://localhost:8081/v1/transactions/delete/{id}
-    @DeleteMapping(path = {"/delete/{id}"})
+    // http://localhost:8081/api/v1/transactions/{id}
+    @DeleteMapping(path = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<ResponseSuccess> deleteTransactionById(@PathVariable(value = "id") Long transactionId) {
         transactionService.deleteTransactionById(transactionId);
