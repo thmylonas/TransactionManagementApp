@@ -11,7 +11,7 @@ public class TestDataProvider {
 
     public static final int AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS = 5;
 
-    public static final List<Transaction> TRANSACTIONS_LIST_HARD_CODED = Arrays.asList(
+    public static final List<Transaction> TRANSACTIONS_LIST = Arrays.asList(
             Transaction.builder()
                     .timestamp(LocalDateTime.now())
                     .type("Type1")

@@ -31,16 +31,16 @@ public class AuthenticationMicroserviceAppApplication {
         };
     }
 
-    private static void createHardCodedTestDataInThisMicroservice(TransactionRepository transactionRepository) {
-        transactionRepository.saveAll(TestDataProvider.TRANSACTIONS_LIST_HARD_CODED);
+    private void createHardCodedTestDataInThisMicroservice(TransactionRepository transactionRepository) {
+        transactionRepository.saveAll(TestDataProvider.TRANSACTIONS_LIST);
     }
 
-    private static void createTestTransactionsInThisMicroservice(TransactionServiceImpl transactionService) {
+    private void createTestTransactionsInThisMicroservice(TransactionServiceImpl transactionService) {
         transactionService.sendTransactions("http://localhost:8080/api/v1/transactions/all",
                 transactionService.generateTransactions(TestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
     }
 
-    private static void sendTransactionsInTransactionMicroservice(TransactionServiceImpl transactionService) {
+    private void sendTransactionsInTransactionMicroservice(TransactionServiceImpl transactionService) {
         transactionService.sendTransactions("http://localhost:8081/api/v1/transactions/all",
                 transactionService.generateTransactions(TestDataProvider.AMOUNT_OF_AUTO_GENERATED_TRANSACTIONS));
     }
