@@ -3,6 +3,7 @@ package com.thomasmylonas.authentication_microservice_app.helpers;
 import com.thomasmylonas.authentication_microservice_app.entities.Transaction;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -46,4 +47,18 @@ public class TestDataProvider {
                     }})
                     .build()
     );
+
+    public static List<Transaction> generateTransactions(int amount) {
+
+        List<Transaction> transactions = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            transactions.add(Transaction.builder()
+                    .timestamp(HelperClass.randomTimestamp())
+                    .type("Type_" + HelperClass.RANDOM.nextInt(1_000_000))
+                    .actor("Actor_" + HelperClass.RANDOM.nextInt(1_000_000))
+                    .transactionData(HelperClass.generateData(HelperClass.RANDOM.nextInt(10)))
+                    .build());
+        }
+        return transactions;
+    }
 }
