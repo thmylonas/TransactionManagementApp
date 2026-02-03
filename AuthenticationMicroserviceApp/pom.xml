@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.thomasmylonas</groupId>
-        <artifactId>sii_transaction_management_app</artifactId>
+        <artifactId>transaction_management_app</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>authentication_microservice_app</artifactId>
