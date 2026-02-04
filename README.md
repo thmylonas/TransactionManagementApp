@@ -2,10 +2,10 @@
 
 Assigned by a Software company
 
-### Project requirements
-
 GitHub link:
 * [TransactionManagementApp](https://github.com/thmylonas/TransactionManagementApp.git)
+
+### Project requirements
 
 Authentication service generates information about transactions. Each transaction contains following
 information:
